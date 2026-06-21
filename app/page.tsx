@@ -17,7 +17,7 @@ export default function Home() {
   const [isStreaming, setIsStreaming] = useState(false);
   const [streamingContent, setStreamingContent] = useState('');
   const [sidebarOpen, setSidebarOpen] = useState(true);
-  const [currentModel, setCurrentModel] = useState<ModelId>('llama3.2-pro');
+  const [currentModel, setCurrentModel] = useState<ModelId>('llama3.2-pro:latest');
 
   // Abort controller ref for cancelling streaming
   const abortControllerRef = useRef<AbortController | null>(null);

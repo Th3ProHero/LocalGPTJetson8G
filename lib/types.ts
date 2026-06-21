@@ -45,8 +45,10 @@ export interface OllamaStreamChunk {
 }
 
 export const AVAILABLE_MODELS = [
-  { id: 'llama3.2-pro', name: 'Llama 3.2 Pro', description: 'Meta — Optimized parameters' },
+  { id: 'llama3.2-pro:latest', name: 'Llama 3.2 Pro', description: 'Meta — Optimized parameters' },
+  { id: 'llama3.2:latest', name: 'Llama 3.2', description: 'Meta — Latest version' },
   { id: 'phi3:mini', name: 'Phi-3 Mini', description: 'Microsoft — Lightweight & fast' },
+  { id: 'qwen3:8b', name: 'Qwen 3 (8B)', description: 'Alibaba — High performance' },
 ] as const;
 
 export type ModelId = typeof AVAILABLE_MODELS[number]['id'];
