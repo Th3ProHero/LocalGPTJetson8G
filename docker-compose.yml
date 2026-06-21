@@ -1,0 +1,35 @@
+# ============================================
+# LocalGPT — Docker Compose
+# Deploy on Ubuntu server 192.168.0.220
+# ============================================
+
+services:
+  localgpt:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        NEXT_PUBLIC_SUPABASE_URL: ${NEXT_PUBLIC_SUPABASE_URL}
+        NEXT_PUBLIC_SUPABASE_ANON_KEY: ${NEXT_PUBLIC_SUPABASE_ANON_KEY}
+    container_name: localgpt
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - OLLAMA_BASE_URL=http://192.168.0.111:11434
+      - NEXT_PUBLIC_SUPABASE_URL=${NEXT_PUBLIC_SUPABASE_URL}
+      - NEXT_PUBLIC_SUPABASE_ANON_KEY=${NEXT_PUBLIC_SUPABASE_ANON_KEY}
+
+    # ── Network: host mode so the container can reach
+    # the Jetson at 192.168.0.111 on the LAN directly.
+    # Alternative: use bridge mode with extra_hosts.
+    network_mode: host
+
+    # ── Resource limits (optional, adjust as needed)
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+        reservations:
+          memory: 256M
