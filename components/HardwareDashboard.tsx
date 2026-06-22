@@ -16,6 +16,7 @@ interface TelemetryData {
 export default function HardwareDashboard() {
   const [stats, setStats] = useState<TelemetryData | null>(null);
   const [error, setError] = useState(false);
+  const [isRestarting, setIsRestarting] = useState(false);
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -37,6 +38,19 @@ export default function HardwareDashboard() {
     const interval = setInterval(fetchStats, 3000); // Polling cada 3s
     return () => clearInterval(interval);
   }, []);
+
+  const handleRestart = async () => {
+    if (isRestarting) return;
+    setIsRestarting(true);
+    try {
+      await fetch('/api/hardware/restart', { method: 'POST' });
+      // Esperamos unos segundos extra a que reinicie ollama y limpie RAM
+      setTimeout(() => setIsRestarting(false), 8000);
+    } catch (e) {
+      console.error(e);
+      setIsRestarting(false);
+    }
+  };
 
   const renderBar = (label: string, value: number = 0) => (
     <div className="mb-2.5 last:mb-0">
@@ -87,6 +101,27 @@ export default function HardwareDashboard() {
           AWAITING_SIGNAL...
         </div>
       )}
+
+      {/* Acciones de Hardware */}
+      <div className="mt-2 pt-2 border-t border-carbon-border">
+        <button
+          onClick={handleRestart}
+          disabled={isRestarting || error}
+          className={`
+            w-full py-1.5 px-2 rounded
+            text-[10px] font-mono tracking-widest uppercase
+            transition-all duration-300
+            border border-dashed
+            ${isRestarting 
+              ? 'bg-cyber-purple/20 border-cyber-purple text-cyber-purple animate-pulse' 
+              : 'border-red-500/40 text-red-500 hover:bg-red-500/10 hover:border-red-500 hover:shadow-[0_0_8px_rgba(239,68,68,0.4)]'
+            }
+            disabled:opacity-50 disabled:cursor-not-allowed
+          `}
+        >
+          {isRestarting ? '[ PURGING VRAM... ]' : '[ PURGE VRAM / RESTART ]'}
+        </button>
+      </div>
     </div>
   );
 }
