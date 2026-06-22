@@ -1,32 +1,30 @@
 @import "tailwindcss";
 
 /* ============================================
-   LocalGPT — Hacker / Matrix Theme
+   LocalGPT — Modern Minimalist Theme
    ============================================ */
 
 @theme {
-  /* Neon Green Palette */
-  --color-neon-green: #00FF41;
-  --color-neon-green-dim: #00CC33;
-  --color-terminal-green: #22C55E;
-  --color-terminal-green-dim: #16A34A;
-
-  /* Cyber Purple Palette */
-  --color-cyber-purple: #7C3AED;
-  --color-cyber-purple-dim: #6D28D9;
-  --color-cyber-purple-glow: #A78BFA;
-
-  /* Void / Carbon Backgrounds */
-  --color-void-black: #000000;
-  --color-carbon: #0D0D0D;
-  --color-carbon-light: #1A1A1A;
-  --color-carbon-lighter: #262626;
-  --color-carbon-border: #333333;
+  /* Minimalist Neutral Palette (Zinc/Slate inspired) */
+  --color-bg-base: #09090b;       /* Zinc 950 */
+  --color-bg-surface: #18181b;    /* Zinc 900 */
+  --color-bg-surface-hover: #27272a; /* Zinc 800 */
+  
+  --color-border: #27272a;        /* Zinc 800 */
+  --color-border-hover: #3f3f46;  /* Zinc 700 */
 
   /* Text */
-  --color-text-primary: #E5E5E5;
-  --color-text-secondary: #A3A3A3;
-  --color-text-muted: #737373;
+  --color-text-primary: #fafafa;  /* Zinc 50 */
+  --color-text-secondary: #a1a1aa;/* Zinc 400 */
+  --color-text-muted: #71717a;    /* Zinc 500 */
+
+  /* Accents */
+  --color-accent-subtle: #ffffff;
+  --color-accent-subtle-hover: #e4e4e7; /* Zinc 200 */
+
+  /* Status Colors */
+  --color-status-error: #ef4444; /* Red 500 */
+  --color-status-error-bg: rgba(239, 68, 68, 0.1);
 
   /* Fonts */
   --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
@@ -42,7 +40,7 @@ html {
 }
 
 body {
-  background-color: var(--color-void-black);
+  background-color: var(--color-bg-base);
   color: var(--color-text-primary);
   font-family: var(--font-sans);
   -webkit-font-smoothing: antialiased;
@@ -50,7 +48,7 @@ body {
 }
 
 /* ============================================
-   Custom Scrollbar — Thin, Green Track
+   Custom Scrollbar — Sleek Minimalist Track
    ============================================ */
 
 ::-webkit-scrollbar {
@@ -59,126 +57,55 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--color-carbon);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--color-carbon-lighter);
-  border-radius: 3px;
+  background: var(--color-border);
+  border-radius: 6px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--color-terminal-green-dim);
+  background: var(--color-border-hover);
 }
 
 /* Firefox */
 * {
   scrollbar-width: thin;
-  scrollbar-color: var(--color-carbon-lighter) var(--color-carbon);
+  scrollbar-color: var(--color-border) transparent;
 }
 
 /* ============================================
-   Neon Glow Utilities
+   Utilities & Animations
    ============================================ */
 
 @layer utilities {
-  .glow-green {
-    box-shadow:
-      0 0 5px rgba(0, 255, 65, 0.3),
-      0 0 10px rgba(0, 255, 65, 0.15),
-      0 0 20px rgba(0, 255, 65, 0.05);
-  }
-
-  .glow-green-strong {
-    box-shadow:
-      0 0 5px rgba(0, 255, 65, 0.5),
-      0 0 15px rgba(0, 255, 65, 0.3),
-      0 0 30px rgba(0, 255, 65, 0.1);
-  }
-
-  .glow-purple {
-    box-shadow:
-      0 0 5px rgba(124, 58, 237, 0.3),
-      0 0 10px rgba(124, 58, 237, 0.15),
-      0 0 20px rgba(124, 58, 237, 0.05);
-  }
-
-  .text-glow-green {
-    text-shadow:
-      0 0 7px rgba(0, 255, 65, 0.5),
-      0 0 15px rgba(0, 255, 65, 0.2);
-  }
-
-  .text-glow-purple {
-    text-shadow:
-      0 0 7px rgba(124, 58, 237, 0.5),
-      0 0 15px rgba(124, 58, 237, 0.2);
-  }
-
-  .border-glow-green {
-    border-color: var(--color-neon-green);
-    box-shadow:
-      0 0 5px rgba(0, 255, 65, 0.2),
-      inset 0 0 5px rgba(0, 255, 65, 0.05);
+  .shadow-soft {
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
   }
 }
+
+@keyframes bounce-dot {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-4px); }
+}
+
+.animate-bounce-dot {
+  animation: bounce-dot 1.2s infinite ease-in-out both;
+}
+
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
 
 /* ============================================
-   Blinking Cursor Animation
-   ============================================ */
-
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-}
-
-@keyframes pulse-dot {
-  0%, 80%, 100% { 
-    transform: scale(0.6);
-    opacity: 0.4;
-  }
-  40% { 
-    transform: scale(1);
-    opacity: 1;
-  }
-}
-
-@keyframes scanline {
-  0% { transform: translateY(-100%); }
-  100% { transform: translateY(100vh); }
-}
-
-@keyframes matrix-fade-in {
-  from {
-    opacity: 0;
-    transform: translateY(8px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-blink {
-  animation: blink 1s step-end infinite;
-}
-
-.animate-pulse-dot {
-  animation: pulse-dot 1.4s infinite ease-in-out both;
-}
-
-.animate-matrix-fade-in {
-  animation: matrix-fade-in 0.3s ease-out forwards;
-}
-
-/* ============================================
-   Code Block Styling (Terminal Look)
+   Code Block Styling
    ============================================ */
 
 pre {
-  background-color: var(--color-carbon) !important;
-  border: 1px solid var(--color-carbon-border) !important;
-  border-radius: 6px;
+  background-color: var(--color-bg-base) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: 8px;
   padding: 1rem !important;
   overflow-x: auto;
   font-family: var(--font-mono);
@@ -192,11 +119,11 @@ code {
 }
 
 :not(pre) > code {
-  background-color: var(--color-carbon-light);
-  border: 1px solid var(--color-carbon-border);
+  background-color: var(--color-bg-surface);
+  border: 1px solid var(--color-border);
   border-radius: 4px;
   padding: 0.15em 0.4em;
-  color: var(--color-neon-green);
+  color: var(--color-text-primary);
 }
 
 /* ============================================
@@ -210,6 +137,7 @@ code {
   font-weight: 600;
   margin-top: 1.5em;
   margin-bottom: 0.5em;
+  letter-spacing: -0.02em;
 }
 
 .markdown-content h1 { font-size: 1.5rem; }
@@ -218,7 +146,8 @@ code {
 
 .markdown-content p {
   margin-bottom: 0.75em;
-  line-height: 1.7;
+  line-height: 1.6;
+  color: var(--color-text-primary);
 }
 
 .markdown-content ul,
@@ -228,47 +157,51 @@ code {
 }
 
 .markdown-content li {
-  margin-bottom: 0.25em;
+  margin-bottom: 0.35em;
   line-height: 1.6;
 }
 
 .markdown-content blockquote {
-  border-left: 3px solid var(--color-cyber-purple);
+  border-left: 3px solid var(--color-border-hover);
   padding-left: 1em;
   color: var(--color-text-secondary);
-  margin: 0.75em 0;
+  margin: 1em 0;
+  font-style: italic;
 }
 
 .markdown-content a {
-  color: var(--color-neon-green);
+  color: var(--color-text-primary);
   text-decoration: underline;
-  text-underline-offset: 2px;
+  text-underline-offset: 4px;
+  text-decoration-color: var(--color-border-hover);
+  transition: text-decoration-color 0.2s ease;
 }
 
 .markdown-content a:hover {
-  color: var(--color-neon-green-dim);
+  text-decoration-color: var(--color-text-primary);
 }
 
 .markdown-content table {
   width: 100%;
   border-collapse: collapse;
-  margin: 0.75em 0;
+  margin: 1.5em 0;
+  font-size: 0.875rem;
 }
 
 .markdown-content th,
 .markdown-content td {
-  border: 1px solid var(--color-carbon-border);
-  padding: 0.5em 0.75em;
+  border: 1px solid var(--color-border);
+  padding: 0.75em 1em;
   text-align: left;
 }
 
 .markdown-content th {
-  background-color: var(--color-carbon-light);
-  color: var(--color-terminal-green);
-  font-weight: 600;
+  background-color: var(--color-bg-surface);
+  color: var(--color-text-primary);
+  font-weight: 500;
 }
 
 .markdown-content hr {
-  border-color: var(--color-carbon-border);
-  margin: 1.5em 0;
+  border-color: var(--color-border);
+  margin: 2em 0;
 }

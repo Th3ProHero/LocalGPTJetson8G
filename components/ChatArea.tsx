@@ -47,13 +47,13 @@ export default function ChatArea({
       `}
     >
       {/* Header Bar */}
-      <header className="flex items-center justify-between px-4 py-3 border-b border-carbon-border bg-carbon/80 backdrop-blur-sm">
+      <header className="flex items-center justify-between px-4 py-3 border-b border-border bg-bg-base/80 backdrop-blur-sm z-10">
         <div className="flex items-center gap-3 ml-14 lg:ml-0">
-          <h2 className="text-text-primary text-sm font-medium truncate max-w-[200px] sm:max-w-[400px]">
+          <h2 className="text-text-primary text-sm font-semibold tracking-tight truncate max-w-[200px] sm:max-w-[400px]">
             {chatTitle}
           </h2>
           {isStreaming && (
-            <span className="text-xs font-mono text-cyber-purple animate-pulse">
+            <span className="text-xs font-sans text-text-muted animate-pulse">
               streaming...
             </span>
           )}

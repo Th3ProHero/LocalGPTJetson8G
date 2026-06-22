@@ -53,15 +53,15 @@ export default function HardwareDashboard() {
   };
 
   const renderBar = (label: string, value: number = 0) => (
-    <div className="mb-2.5 last:mb-0">
-      <div className="flex justify-between text-[10px] font-mono mb-1">
-        <span className="text-text-muted uppercase tracking-wider">{label}</span>
-        <span className="text-neon-green">{value.toFixed(1)}%</span>
+    <div className="mb-3 last:mb-0">
+      <div className="flex justify-between text-[11px] font-sans mb-1.5">
+        <span className="text-text-secondary font-medium tracking-wide">{label}</span>
+        <span className="text-text-primary font-mono">{value.toFixed(1)}%</span>
       </div>
-      {/* Barra estricta sin bordes redondeados (sharp edges) */}
-      <div className="h-1 bg-carbon-border w-full overflow-hidden">
+      {/* Soft rounded progress bar */}
+      <div className="h-1.5 bg-border w-full rounded-full overflow-hidden">
         <div 
-          className="h-full bg-neon-green transition-all duration-500 ease-out" 
+          className="h-full bg-text-primary transition-all duration-500 ease-out rounded-full" 
           style={{ width: `${Math.min(100, Math.max(0, value))}%` }} 
         />
       </div>
@@ -69,57 +69,68 @@ export default function HardwareDashboard() {
   );
 
   return (
-    <div className="p-4 bg-void-black border-t border-carbon-border w-full flex flex-col gap-3 animate-matrix-fade-in shrink-0">
+    <div className="p-4 bg-bg-surface border-t border-border w-full flex flex-col gap-4 shrink-0 transition-opacity duration-300">
       <div className="flex items-center justify-between mb-1">
         <div className="flex items-center gap-2">
-          <div className={`w-1.5 h-1.5 ${error ? 'bg-red-500' : 'bg-neon-green animate-pulse-dot'}`} />
-          <span className="text-xs font-mono text-terminal-green tracking-widest uppercase">
-            SYS_TELEMETRY
+          <div className={`w-1.5 h-1.5 rounded-full ${error ? 'bg-status-error' : 'bg-text-primary'}`} />
+          <span className="text-xs font-sans text-text-primary font-semibold tracking-wide">
+            Telemetry
           </span>
         </div>
         
         {/* Temperatures */}
         {stats && !error && (
-          <div className="text-[10px] font-mono text-cyber-purple flex gap-2">
+          <div className="text-[11px] font-mono text-text-secondary flex gap-2 bg-bg-base px-2 py-0.5 rounded border border-border">
             <span>{stats.temp_cpu?.toFixed(0)}°C</span>
           </div>
         )}
       </div>
       
       {error ? (
-        <div className="text-[10px] font-mono text-red-500 py-2">
-          [ERR_LINK_OFFLINE]
+        <div className="text-xs font-sans text-status-error py-2 flex items-center gap-2 bg-status-error-bg px-3 rounded border border-status-error/20">
+          <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
+             <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+          Offline
         </div>
       ) : stats ? (
-        <div className="flex flex-col">
+        <div className="flex flex-col gap-1">
           {renderBar('CPU', stats.cpu_percent ?? 0)}
           {renderBar('RAM', stats.ram_percent ?? 0)}
           {renderBar('GPU', stats.gpu_percent ?? 0)}
         </div>
       ) : (
-        <div className="text-[10px] font-mono text-text-muted py-2 animate-pulse">
-          AWAITING_SIGNAL...
+        <div className="text-xs font-sans text-text-muted py-2 animate-pulse flex items-center gap-2">
+          <div className="w-3 h-3 rounded-full border-2 border-border border-t-text-primary animate-spin" />
+          Connecting...
         </div>
       )}
 
       {/* Acciones de Hardware */}
-      <div className="mt-2 pt-2 border-t border-carbon-border">
+      <div className="pt-3 border-t border-border mt-1">
         <button
           onClick={handleRestart}
           disabled={isRestarting || error}
           className={`
-            w-full py-1.5 px-2 rounded
-            text-[10px] font-mono tracking-widest uppercase
+            w-full py-2 px-3 rounded-lg flex justify-center items-center gap-2
+            text-xs font-sans font-medium
             transition-all duration-300
-            border border-dashed
+            border
             ${isRestarting 
-              ? 'bg-cyber-purple/20 border-cyber-purple text-cyber-purple animate-pulse' 
-              : 'border-red-500/40 text-red-500 hover:bg-red-500/10 hover:border-red-500 hover:shadow-[0_0_8px_rgba(239,68,68,0.4)]'
+              ? 'bg-bg-base border-border text-text-secondary cursor-wait' 
+              : 'bg-bg-base border-border text-text-secondary hover:bg-bg-surface-hover hover:border-border-hover hover:text-text-primary'
             }
-            disabled:opacity-50 disabled:cursor-not-allowed
+            disabled:opacity-50 disabled:cursor-not-allowed shadow-sm
           `}
         >
-          {isRestarting ? '[ PURGING VRAM... ]' : '[ PURGE VRAM / RESTART ]'}
+          {isRestarting ? (
+            <>
+              <div className="w-3 h-3 rounded-full border-2 border-border border-t-text-primary animate-spin" />
+              Purging VRAM...
+            </>
+          ) : (
+            'Purge VRAM / Restart'
+          )}
         </button>
       </div>
     </div>

@@ -22,17 +22,18 @@ export default function ModelSelector({
         disabled={disabled}
         className="
           appearance-none
-          bg-carbon-light
-          border border-carbon-border
+          bg-bg-surface
+          border border-border
           text-text-secondary text-sm
-          font-mono
-          rounded-md
+          font-sans font-medium
+          rounded-lg
           px-3 py-1.5 pr-8
           cursor-pointer
           transition-all duration-200
-          hover:border-terminal-green hover:text-text-primary
-          focus:outline-none focus:border-neon-green focus:glow-green
+          hover:bg-bg-surface-hover hover:border-border-hover hover:text-text-primary
+          focus:outline-none focus:border-text-primary
           disabled:opacity-50 disabled:cursor-not-allowed
+          shadow-sm
         "
       >
         {AVAILABLE_MODELS.map((model) => (
@@ -44,7 +45,7 @@ export default function ModelSelector({
       {/* Custom dropdown arrow */}
       <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center pr-2">
         <svg
-          className="h-4 w-4 text-terminal-green"
+          className="h-4 w-4 text-text-muted"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={2}

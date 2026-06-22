@@ -338,7 +338,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex h-screen overflow-hidden bg-void-black">
+    <div className="flex h-screen overflow-hidden bg-bg-base">
       {/* Sidebar */}
       <Sidebar
         chats={chats}

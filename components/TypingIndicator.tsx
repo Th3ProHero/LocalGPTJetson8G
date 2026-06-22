@@ -9,9 +9,9 @@ import { useState, useEffect } from 'react';
  */
 
 const BOOT_MESSAGES = [
-  { text: 'Establishing secure link to inference node...', delay: 0 },
-  { text: 'Allocating CUDA memory blocks...', delay: 1800 },
-  { text: 'Loading neural network weights into VRAM...', delay: 3500 },
+  { text: 'Connecting to inference node...', delay: 0 },
+  { text: 'Allocating memory...', delay: 1800 },
+  { text: 'Loading neural network weights...', delay: 3500 },
   { text: 'Initializing attention layers...', delay: 5200 },
   { text: 'Model loaded. Generating response...', delay: 7000 },
 ];
@@ -34,13 +34,13 @@ export default function TypingIndicator() {
   }, []);
 
   return (
-    <div className="flex justify-start animate-matrix-fade-in">
-      <div className="bg-carbon-light border border-carbon-border rounded-xl px-4 py-3 max-w-[80%]">
-        {/* Terminal header */}
-        <div className="flex items-center gap-2 mb-2 pb-2 border-b border-carbon-border">
-          <div className="w-2 h-2 rounded-full bg-neon-green animate-pulse" />
-          <span className="text-xs font-mono text-terminal-green">
-            jetson@192.168.0.111
+    <div className="flex justify-start opacity-100 transition-opacity duration-300">
+      <div className="bg-transparent px-2 py-1 max-w-[80%]">
+        {/* Header */}
+        <div className="flex items-center gap-2 mb-3">
+          <div className="w-1.5 h-1.5 rounded-full bg-text-primary animate-pulse" />
+          <span className="text-[11px] font-sans font-medium text-text-secondary uppercase tracking-wider">
+            System Status
           </span>
         </div>
 
@@ -53,27 +53,26 @@ export default function TypingIndicator() {
             return (
               <div
                 key={index}
-                className="flex items-start gap-2 animate-matrix-fade-in"
+                className="flex items-start gap-2.5 transition-opacity duration-300"
               >
                 {/* Status indicator */}
-                <span className="text-xs font-mono mt-0.5 flex-shrink-0">
+                <span className="text-xs font-sans mt-[3px] flex-shrink-0">
                   {isComplete ? (
-                    <span className="text-neon-green">✓</span>
+                    <svg className="w-3 h-3 text-text-primary" fill="none" viewBox="0 0 24 24" strokeWidth={3} stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+                    </svg>
                   ) : (
-                    <span className="text-cyber-purple animate-pulse">▸</span>
+                    <div className="w-3 h-3 rounded-full border-2 border-border border-t-text-primary animate-spin" />
                   )}
                 </span>
 
                 {/* Message text */}
                 <span
-                  className={`text-xs font-mono leading-relaxed ${
+                  className={`text-xs font-sans font-medium leading-relaxed ${
                     isLatest ? 'text-text-primary' : 'text-text-muted'
                   }`}
                 >
                   {msg.text}
-                  {isLatest && (
-                    <span className="inline-block w-1.5 h-3.5 bg-neon-green ml-1 animate-blink align-middle" />
-                  )}
                 </span>
               </div>
             );
@@ -81,9 +80,9 @@ export default function TypingIndicator() {
         </div>
 
         {/* Progress bar */}
-        <div className="mt-3 h-0.5 bg-carbon-lighter rounded-full overflow-hidden">
+        <div className="mt-4 h-1 bg-border rounded-full overflow-hidden w-48">
           <div
-            className="h-full bg-neon-green/60 rounded-full transition-all duration-1000 ease-out"
+            className="h-full bg-text-primary rounded-full transition-all duration-1000 ease-out"
             style={{
               width: `${(visibleCount / BOOT_MESSAGES.length) * 100}%`,
             }}

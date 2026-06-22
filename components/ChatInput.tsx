@@ -59,24 +59,21 @@ export default function ChatInput({
   };
 
   return (
-    <div className="border-t border-carbon-border bg-carbon p-4">
+    <div className="bg-transparent p-4">
       <div
         className={`
           flex items-end gap-3
-          bg-carbon-light
-          border rounded-xl
+          bg-bg-surface
+          border rounded-2xl
           px-4 py-3
           transition-all duration-300
+          shadow-sm
           ${disabled
-            ? 'border-carbon-border opacity-70'
-            : 'border-carbon-border hover:border-terminal-green-dim focus-within:border-neon-green focus-within:glow-green'
+            ? 'border-border opacity-70'
+            : 'border-border focus-within:border-border-hover focus-within:shadow-soft'
           }
         `}
       >
-        {/* Terminal prompt symbol */}
-        <span className="text-neon-green font-mono text-sm mb-1 select-none flex-shrink-0">
-          {'❯'}
-        </span>
 
         <textarea
           ref={textareaRef}
@@ -110,11 +107,11 @@ export default function ChatInput({
               flex-shrink-0
               flex items-center gap-1.5
               px-3 py-1.5
-              rounded-lg
-              bg-red-500/10
-              border border-red-500/40
-              text-red-400
-              text-xs font-mono
+              rounded-full
+              bg-bg-surface-hover
+              border border-border
+              text-text-primary
+              text-xs font-sans font-medium
               transition-all duration-200
               hover:bg-red-500/20 hover:border-red-500
               active:scale-95
@@ -135,10 +132,10 @@ export default function ChatInput({
             className="
               flex-shrink-0
               p-2
-              rounded-lg
+              rounded-full
               transition-all duration-200
               disabled:opacity-30 disabled:cursor-not-allowed
-              enabled:hover:bg-neon-green/10 enabled:hover:glow-green
+              enabled:hover:bg-bg-surface-hover
               enabled:active:scale-95
               cursor-pointer
             "
@@ -146,7 +143,7 @@ export default function ChatInput({
           >
             <svg
               className={`w-5 h-5 transition-colors duration-200 ${
-                input.trim() && !disabled ? 'text-neon-green' : 'text-text-muted'
+                input.trim() && !disabled ? 'text-text-primary' : 'text-text-muted'
               }`}
               fill="none"
               viewBox="0 0 24 24"
@@ -164,17 +161,17 @@ export default function ChatInput({
       </div>
 
       {/* Hint */}
-      <p className="text-text-muted text-xs mt-2 text-center font-mono">
+      <p className="text-text-muted text-[11px] mt-2 text-center font-sans">
         {isStreaming ? (
           <>
-            <span className="text-red-400">Esc</span> or{' '}
-            <span className="text-red-400">Stop</span> to cancel •{' '}
+            <span className="text-text-secondary font-medium">Esc</span> or{' '}
+            <span className="text-text-secondary font-medium">Stop</span> to cancel •{' '}
             <span className="text-text-muted">Auto-cancels after 3 min</span>
           </>
         ) : (
           <>
-            <span className="text-terminal-green">Enter</span> to send •{' '}
-            <span className="text-terminal-green">Shift+Enter</span> for new line
+            <span className="text-text-secondary font-medium">Enter</span> to send •{' '}
+            <span className="text-text-secondary font-medium">Shift+Enter</span> for new line
           </>
         )}
       </p>

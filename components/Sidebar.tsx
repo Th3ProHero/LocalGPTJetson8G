@@ -101,11 +101,12 @@ export default function Sidebar({
         className="
           fixed top-4 left-4 z-50
           p-2 rounded-md
-          bg-carbon-light border border-carbon-border
-          text-text-secondary hover:text-neon-green
-          hover:border-neon-green hover:glow-green
+          bg-bg-surface border border-border
+          text-text-secondary hover:text-text-primary
+          hover:bg-bg-surface-hover
           transition-all duration-300
           cursor-pointer
+          shadow-soft
         "
         aria-label={isOpen ? 'Close sidebar' : 'Open sidebar'}
       >
@@ -134,17 +135,17 @@ export default function Sidebar({
         className={`
           fixed top-0 left-0 z-40
           h-full w-72
-          bg-carbon border-r border-carbon-border
+          bg-bg-base border-r border-border
           flex flex-col
           transition-transform duration-300 ease-in-out
           ${isOpen ? 'translate-x-0' : '-translate-x-full'}
         `}
       >
         {/* Header */}
-        <div className="flex items-center gap-3 px-4 pt-16 pb-4 border-b border-carbon-border">
+        <div className="flex items-center gap-3 px-4 pt-16 pb-4 border-b border-border">
           <div className="flex items-center gap-2 flex-1 min-w-0">
-            <div className="w-2 h-2 rounded-full bg-neon-green glow-green-strong animate-pulse" />
-            <h1 className="text-neon-green font-mono text-lg font-bold text-glow-green truncate">
+            <div className="w-1.5 h-1.5 rounded-full bg-text-primary" />
+            <h1 className="text-text-primary font-sans text-lg font-semibold tracking-tight truncate">
               LocalGPT
             </h1>
           </div>
@@ -159,14 +160,15 @@ export default function Sidebar({
             className="
               w-full flex items-center gap-2
               px-3 py-2.5
-              bg-transparent
-              border border-dashed border-neon-green/40
+              bg-bg-surface
+              border border-border
               rounded-lg
-              text-neon-green text-sm font-mono
+              text-text-primary text-sm font-medium
               transition-all duration-300
-              hover:bg-neon-green/5 hover:border-neon-green hover:glow-green
+              hover:bg-bg-surface-hover hover:border-border-hover
               active:scale-[0.98]
               cursor-pointer
+              shadow-sm
             "
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" strokeWidth={2} stroke="currentColor">
@@ -198,15 +200,15 @@ export default function Sidebar({
                     cursor-pointer
                     transition-all duration-200
                     ${activeChatId === chat.id
-                      ? 'bg-carbon-lighter border border-neon-green/30 glow-green'
-                      : 'hover:bg-carbon-light border border-transparent'
+                      ? 'bg-bg-surface border border-border shadow-sm'
+                      : 'hover:bg-bg-surface border border-transparent'
                     }
                   `}
                 >
                   {/* Chat icon */}
                   <svg
                     className={`w-4 h-4 flex-shrink-0 ${
-                      activeChatId === chat.id ? 'text-neon-green' : 'text-text-muted'
+                      activeChatId === chat.id ? 'text-text-primary' : 'text-text-muted'
                     }`}
                     fill="none"
                     viewBox="0 0 24 24"
@@ -228,12 +230,12 @@ export default function Sidebar({
                         onBlur={handleConfirmRename}
                         className="
                           w-full text-sm
-                          bg-carbon border border-neon-green/50
+                          bg-bg-surface border border-border-hover
                           rounded px-1.5 py-0.5
                           text-text-primary
                           outline-none
                           font-sans
-                          focus:border-neon-green focus:glow-green
+                          focus:border-text-primary
                         "
                         onClick={(e) => e.stopPropagation()}
                       />
@@ -247,7 +249,7 @@ export default function Sidebar({
                           {chat.title}
                         </p>
                         <div className="flex items-center gap-2 mt-0.5">
-                          <span className="text-xs font-mono text-cyber-purple truncate">
+                          <span className="text-xs text-text-secondary truncate font-medium">
                             {chat.model.split(':')[0]}
                           </span>
                           <span className="text-text-muted text-xs">
@@ -268,7 +270,7 @@ export default function Sidebar({
                           p-1 rounded
                           text-text-muted
                           opacity-0 group-hover:opacity-100
-                          hover:text-neon-green
+                          hover:text-text-primary hover:bg-bg-surface-hover
                           transition-all duration-200
                           cursor-pointer
                         "
@@ -287,8 +289,8 @@ export default function Sidebar({
                           transition-all duration-200
                           cursor-pointer
                           ${deleteConfirm === chat.id
-                            ? 'text-red-500 bg-red-500/10'
-                            : 'text-text-muted opacity-0 group-hover:opacity-100 hover:text-red-400'
+                            ? 'text-status-error bg-status-error-bg'
+                            : 'text-text-muted opacity-0 group-hover:opacity-100 hover:text-status-error hover:bg-status-error-bg'
                           }
                         `}
                         aria-label={deleteConfirm === chat.id ? 'Confirm delete' : 'Delete chat'}
